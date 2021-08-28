@@ -1,0 +1,19 @@
+{
+  "name": "automation",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "todo app test demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Biraj Mainali",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^9.1.0",
+    "selenium-webdriver": "^4.0.0-beta.4"
+  },
+  "devDependencies": {
+    "nyc": "^15.1.0"
+  }
+}
