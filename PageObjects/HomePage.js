@@ -31,7 +31,7 @@ export default class HomePage extends BasePage {
         await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[2]/div/input');
     }
 
-    edit_completed_todo_enables = async () => {
+    edit_completed_todo_edits = async () => {
         await this.sleep(3);
         // enable fo edit
         await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
@@ -51,9 +51,9 @@ export default class HomePage extends BasePage {
         await this.sleep(5);
         // chinking remove button
         await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[2]');
-        await this.sleep(2);
         // handling confirmation alert
         await this.ConfirmAlert();
+        await this.sleep(2);
     }
 
 
