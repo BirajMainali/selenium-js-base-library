@@ -1,7 +1,7 @@
 import HomePage from "../PageObjects/HomePage.js";
 
 
-describe('This is the describe block', function () {
+describe('This is the todo app testing', function () {
     this.timeout(50000);
     beforeEach(async () => {
         const baseurl = 'https://birajmainali.github.io/Todo/';
@@ -14,7 +14,7 @@ describe('This is the describe block', function () {
 
     it('Adding new todo item', async () => {
 
-        await new HomePage().add_todo_adds("Auto Added");
+        await new HomePage().add_todo_adds();
     });
 
     it('Editing added todo item', async () => {
@@ -25,11 +25,12 @@ describe('This is the describe block', function () {
         await new HomePage().complete_todo_completes();
     });
 
-    it('Enable completed todo item, enables and edits', async () => {
+    it('Enable completed todo item, Enables and Edit', async () => {
         await new HomePage().edit_completed_todo_edits();
     });
 
     it('Remove added todo', async () => {
         await new HomePage().remove_todo_removes();
+        done();
     });
 })
