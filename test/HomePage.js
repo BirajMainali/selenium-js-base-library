@@ -1,4 +1,5 @@
 import HomePage from "../PageObjects/HomePage.js";
+import BasePage from "../Infastructure/BasePage.js";
 
 
 describe('This is the todo app testing box', function () {
@@ -9,7 +10,7 @@ describe('This is the todo app testing box', function () {
     });
 
     afterEach(async () => {
-
+        await new BasePage().sleep(2);
     });
 
     it('Adding new todo item', async () => {

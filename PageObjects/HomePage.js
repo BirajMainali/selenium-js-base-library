@@ -1,5 +1,5 @@
-import BasePage from "./BasePage.js";
-import Handler from "./Handler.js";
+import BasePage from "../Infastructure/BasePage.js";
+import Handler from "../Infastructure/Handler.js";
 import assert from "assert";
 
 
@@ -8,7 +8,7 @@ const input = Object.freeze({
     updateTodo: "Fixing previous by night",
     complete_update_todo: "Bug has not been fixed"
 })
-export default class HomePage extends new BasePage {
+export default class HomePage extends BasePage {
 
     constructor() {
         super();
@@ -21,51 +21,42 @@ export default class HomePage extends new BasePage {
     }
 
     ensure_todo_added = async () => {
-        await this.sleep(1);
-        const todo = await this.get_text_by_xpath("/html/body/div/div/div[2]/div[2]/table/tbody/tr[1]/td[3]");
+        const todo = await this.get_text_by_xpath("/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[3]/span");
         assert.strictEqual(todo, input.newTodo);
     }
 
     edit_todo_edits = async () => {
-        await this.sleep(3);
         // enable for edit
-        await this.click_by_Xpath("/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]");
+        await this.click_by_xpath("/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]");
         // send update input
         await this.enter_text_by_className('editedContent', input.updateTodo);
-        await this.sleep(1);
         // saving changes
-        await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
+        await this.click_by_xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
     }
 
     complete_todo_completes = async () => {
-        await this.sleep(3);
         // clicking compete todo check box
-        await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[2]/div/input');
+        await this.click_by_xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[2]/div/input');
     }
 
     edit_completed_todo_edits = async () => {
-        await this.sleep(3);
         // enable fo edit
-        await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
-        await this.sleep(2)
+        await this.click_by_xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
         // handling confirmation alert
         await this.Handler.confirm_alert();
         // sending new update input
         await this.enter_text_by_className('editedContent', input.complete_update_todo);
         // changing state complete to incomplete
-        await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[2]/div/input');
-        await this.sleep(2)
+        await this.click_by_xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[2]/div/input');
         // clicking complete checkbox
-        await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
+        await this.click_by_xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
     }
 
     remove_todo_removes = async () => {
-        await this.sleep(5);
         // chinking remove button
-        await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[2]');
+        await this.click_by_xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[2]');
         // handling confirmation alert
         await this.Handler.confirm_alert();
-        await this.sleep(2);
     }
 
 
