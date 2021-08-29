@@ -1,4 +1,4 @@
-import HomePage from "../PageObjects/HomePage.js";
+import HomePage from "../Behavior/HomePage.js";
 import BasePage from "../Infastructure/BasePage.js";
 
 
