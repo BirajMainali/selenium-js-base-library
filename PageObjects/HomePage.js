@@ -1,17 +1,29 @@
 import BasePage from "./BasePage.js";
+import Handler from "./Handler.js";
+import assert from "assert";
+
 
 const input = Object.freeze({
     newTodo: "Fixing new bug by evening",
     updateTodo: "Fixing previous by night",
     complete_update_todo: "Bug has not been fixed"
 })
+export default class HomePage extends new BasePage {
 
-export default class HomePage extends BasePage {
-
+    constructor() {
+        super();
+        this.Handler = new Handler();
+    }
 
     add_todo_adds = async () => {
         // todo Input element
-        await this.send_keys_by_Xpath('/html/body/div/div/div[2]/div[1]/div[1]/div/input', input.newTodo);
+        await this.enter_text_by_xpath('/html/body/div/div/div[2]/div[1]/div[1]/div/input', input.newTodo);
+    }
+
+    ensure_todo_added = async () => {
+        await this.sleep(1);
+        const todo = await this.get_text_by_xpath("/html/body/div/div/div[2]/div[2]/table/tbody/tr[1]/td[3]");
+        assert.strictEqual(todo, input.newTodo);
     }
 
     edit_todo_edits = async () => {
@@ -19,7 +31,7 @@ export default class HomePage extends BasePage {
         // enable for edit
         await this.click_by_Xpath("/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]");
         // send update input
-        await this.send_keys_by_className('editedContent', input.updateTodo);
+        await this.enter_text_by_className('editedContent', input.updateTodo);
         await this.sleep(1);
         // saving changes
         await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
@@ -37,9 +49,9 @@ export default class HomePage extends BasePage {
         await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[1]');
         await this.sleep(2)
         // handling confirmation alert
-        await this.ConfirmAlert();
+        await this.Handler.confirm_alert();
         // sending new update input
-        await this.send_keys_by_className('editedContent', input.complete_update_todo);
+        await this.enter_text_by_className('editedContent', input.complete_update_todo);
         // changing state complete to incomplete
         await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[2]/div/input');
         await this.sleep(2)
@@ -52,7 +64,7 @@ export default class HomePage extends BasePage {
         // chinking remove button
         await this.click_by_Xpath('/html/body/div/div/div[2]/div[2]/table/tbody/tr/td[4]/div/button[2]');
         // handling confirmation alert
-        await this.ConfirmAlert();
+        await this.Handler.confirm_alert();
         await this.sleep(2);
     }
 

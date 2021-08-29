@@ -1,6 +1,7 @@
-import {Builder, By, Key, until} from 'selenium-webdriver';
+import {Builder, By, Key} from 'selenium-webdriver';
 
 const driver = new Builder().forBrowser('firefox').build();
+
 export default class BasePage {
     constructor() {
         global.driver = driver;
@@ -42,7 +43,7 @@ export default class BasePage {
         await driver.findElement(By.id(id)).click();
     }
 
-    find_by_className = async (className) => {
+    find_element_by_className = async (className) => {
         await driver.findElement({className: className});
     }
 
@@ -56,10 +57,10 @@ export default class BasePage {
     }
     /**
      *
-     * @param Xpath
+     * @param xpath
      * @returns {Promise<void>}
      */
-    find_By_Xpath = async (Xpath) => await driver.findElement(By.xpath(Xpath));
+    find_element_by_xpath = async (xpath) => await driver.findElement(By.xpath(xpath));
 
     /**
      *
@@ -67,10 +68,17 @@ export default class BasePage {
      * @param input
      * @returns {Promise<void>}
      */
-    send_keys_by_className = async (className, input) => {
+    enter_text_by_className = async (className, input) => {
         await this.clear_input_by_className(className);
         await driver.findElement({className: className}).sendKeys(input);
     }
+
+    /**
+     *
+     * @param xpath
+     * @returns {Promise<T>}
+     */
+    get_text_by_xpath = async (xpath) => await driver.findElement(By.xpath(xpath)).getText().then((value) => value);
 
     /**
      *
@@ -83,12 +91,12 @@ export default class BasePage {
 
     /**
      *
-     * @param Xpath
+     * @param xpath
      * @param input
      * @returns {Promise<void>}
      */
-    send_keys_by_Xpath = async (Xpath, input) => {
-        await driver.findElement(By.xpath(Xpath)).sendKeys(input, Key.RETURN);
+    enter_text_by_xpath = async (xpath, input) => {
+        await driver.findElement(By.xpath(xpath)).sendKeys(input, Key.RETURN);
     }
 
     /**
@@ -97,14 +105,5 @@ export default class BasePage {
      */
     sleep = (second) => new Promise(resolve => setTimeout(resolve, (second * 1000)));
 
-    /**
-     *
-     * @returns {Promise<void>}
-     * @constructor
-     */
-    ConfirmAlert = async () => {
-        await driver.wait(until.alertIsPresent());
-        const alert = await driver.switchTo().alert();
-        await alert.accept();
-    }
+
 }

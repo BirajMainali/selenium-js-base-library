@@ -1,7 +1,7 @@
 import HomePage from "../PageObjects/HomePage.js";
 
 
-describe('This is the todo app testing', function () {
+describe('This is the todo app testing box', function () {
     this.timeout(50000);
     beforeEach(async () => {
         const baseurl = 'https://birajmainali.github.io/Todo/';
@@ -15,6 +15,10 @@ describe('This is the todo app testing', function () {
     it('Adding new todo item', async () => {
 
         await new HomePage().add_todo_adds();
+    });
+
+    it('Ensure todo is added', async () => {
+        await new HomePage().ensure_todo_added();
     });
 
     it('Editing added todo item', async () => {
