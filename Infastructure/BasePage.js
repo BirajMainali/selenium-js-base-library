@@ -6,7 +6,6 @@ export default class BasePage {
         global.driver = driver;
     }
 
-
     /**
      * back to previous page
      * @returns {Promise<void>}
@@ -35,26 +34,24 @@ export default class BasePage {
         await this.sleep(2);
         await driver.executeScript(`
         const form_input_elem = document.querySelectorAll('input');
-        window.addEventListener('DOMContentLoaded', () => {
           for (let i = 0; i < form_input_elem.length; i++) {
-            const elem = form_input_elem[i];
-            if (elem.type === "text") {
-              if (${is_string_amount}) {
-                elem.value = 100;
-              } else {
-                elem.value = "Mocha"
-              }
-            } else if (elem.type === "email") {
-              elem.value = "auto@gmail.com";
-            } else if (elem.type === "radio" || elem.type == "checkbox") {
-              elem.value = true;
-            } else if (elem.type === "tel") {
-              elem.value = 98000000;
-            } else if (elem.type === "number") {
-              elem.value = 1000;
+          const elem = form_input_elem[i];
+          if (elem.type === "text") {
+            if (${is_string_amount}) {
+              elem.value = 100;
+            } else {
+              elem.value = "auto complete [i]";
             }
+          } else if (elem.type === "email") {
+            elem.value = "auto@gmail.com";
+          } else if (elem.type === "radio" || elem.type == "checkbox") {
+            elem.value = true;
+          } else if (elem.type === "tel") {
+            elem.value = 98000000;
+          } else if (elem.type === "number") {
+            elem.value = 100;
           }
-        }); `);
+        }`);
         await this.sleep(2);
     }
 
