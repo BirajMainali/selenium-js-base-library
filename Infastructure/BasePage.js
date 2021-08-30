@@ -40,7 +40,7 @@ export default class BasePage {
             if (${is_string_amount}) {
               elem.value = 100;
             } else {
-              elem.value = "auto complete [i]";
+              elem.value = "auto complete+i";
             }
           } else if (elem.type === "email") {
             elem.value = "auto@gmail.com";
