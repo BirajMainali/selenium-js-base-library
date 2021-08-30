@@ -7,6 +7,61 @@ export default class BasePage {
     }
 
 
+    /**
+     * back to previous page
+     * @returns {Promise<void>}
+     */
+    back = async () => {
+        await this.sleep(2);
+        await driver.executeScript(`window.history.back()`);
+    }
+
+    /**
+     * Move forward to previous page
+     * @returns {Promise<void>}
+     */
+    forward = async () => {
+        await this.sleep(2);
+        await driver.executeScript(`window.history.forward()`);
+    }
+
+    /**
+     * fill all the input field by type
+     * @param is_string_amount
+     * @returns {Promise<void>}
+     */
+
+    fill_form = async (is_string_amount = false) => {
+        await this.sleep(2);
+        await driver.executeScript(`
+        const form_input_elem = document.querySelectorAll('input');
+        window.addEventListener('DOMContentLoaded', () => {
+          for (let i = 0; i < form_input_elem.length; i++) {
+            const elem = form_input_elem[i];
+            if (elem.type === "text") {
+              if (${is_string_amount}) {
+                elem.value = 100;
+              } else {
+                elem.value = "Mocha"
+              }
+            } else if (elem.type === "email") {
+              elem.value = "auto@gmail.com";
+            } else if (elem.type === "radio" || elem.type == "checkbox") {
+              elem.value = true;
+            } else if (elem.type === "tel") {
+              elem.value = 98000000;
+            } else if (elem.type === "number") {
+              elem.value = 1000;
+            }
+          }
+        }); `);
+        await this.sleep(2);
+    }
+
+    /**
+     * scroll browser window top to bottom
+     * @returns {Promise<void>}
+     */
     scroll_top_to_bottom = async () => {
         await this.sleep(0.5);
         await driver.executeScript("window.scrollTo({  top: 10000000,left: 100,behavior: 'smooth' });");
@@ -14,14 +69,14 @@ export default class BasePage {
     }
 
     /**
-     *
+     * get element value by id
      * @param id
      * @returns {Promise<T>}
      */
     get_text_by_id = async (id) => await driver.findElement(By.id(id)).getText().then((value) => value);
 
     /***
-     *
+     * click any element by its name attribute
      * @param name
      * @returns {Promise<void>}
      */
@@ -31,7 +86,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * enter text and press enter by name attribute
      * @param name
      * @param text
      * @returns {Promise<void>}
@@ -43,7 +98,7 @@ export default class BasePage {
 
 
     /**
-     *
+     * enter text and press by id attribute
      * @param id
      * @param text
      * @returns {Promise<void>}
@@ -53,8 +108,9 @@ export default class BasePage {
         await this.sleep(1);
         await driver.findElement(By.id(id)).sendKeys(text, Key.RETURN);
     }
+
     /**
-     *
+     * enter text by name attribute
      * @param name
      * @param text
      * @returns {Promise<void>}
@@ -65,7 +121,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * enter text by id attribute
      * @param id
      * @param text
      * @returns {Promise<void>}
@@ -76,6 +132,7 @@ export default class BasePage {
     }
 
     /**
+     * goto next new url
      * @param URL
      * @returns {Promise<void>}
      */
@@ -85,7 +142,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * enter text by class selector
      * @param css
      * @param searchText
      * @returns {Promise<void>}
@@ -94,8 +151,9 @@ export default class BasePage {
         await this.sleep(1);
         await driver.findElement(By.css(css)).sendKeys(searchText);
     }
+
     /**
-     *
+     * click target element by Xpath
      * @param xpath
      * @returns {Promise<void>}
      */
@@ -105,7 +163,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * click target element by its id attribute
      * @param id
      * @returns {Promise<void>}
      */
@@ -114,8 +172,9 @@ export default class BasePage {
         await this.sleep(1);
         await driver.findElement(By.id(id)).click();
     }
+
     /**
-     *
+     * fine element by its classname
      * @param className
      * @returns {Promise<void>}
      */
@@ -124,7 +183,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * clear input value | text by classname
      * @param className
      * @returns {Promise<void>}
      */
@@ -132,15 +191,16 @@ export default class BasePage {
         await this.sleep(1);
         await driver.findElement({className: className}).clear();
     }
+
     /**
-     *
+     * find target element by Xpath
      * @param xpath
      * @returns {Promise<void>}
      */
     find_element_by_xpath = async (xpath) => await driver.findElement(By.xpath(xpath));
 
     /**
-     *
+     * clear previous text and fill new text by class name
      * @param className
      * @param input
      * @returns {Promise<void>}
@@ -151,7 +211,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * get text content by Xpath
      * @param xpath
      * @returns {Promise<T>}
      */
@@ -161,7 +221,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * click target element by classname
      * @param className
      * @returns {Promise<void>}
      */
@@ -171,7 +231,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * enter a new text in target element and press ENTER | Key : 10
      * @param xpath
      * @param input
      * @returns {Promise<void>}
@@ -182,7 +242,7 @@ export default class BasePage {
     }
 
     /**
-     *
+     * wait for a second before performing new promise
      * @param second
      */
     sleep = (second) => new Promise(resolve => setTimeout(resolve, (second * 1000)));
