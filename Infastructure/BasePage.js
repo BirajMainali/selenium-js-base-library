@@ -6,6 +6,15 @@ export default class BasePage {
         global.driver = driver;
     }
 
+
+    /**
+     * Full page load and update new cache
+     * @returns {Promise<void>}
+     */
+    full_page_load = async () => {
+        await driver.findElement(By.tagName("html")).sendKeys(Key.CONTROL, Key.F5);
+    }
+
     /**
      * back to previous page
      * @returns {Promise<void>}
